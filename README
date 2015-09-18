@@ -1,0 +1,22 @@
+qmlsokoban 0.7 - a Sokoban game written in QML
+
+Copyright (C) 2010, 2011 Glad Deschrijver <glad.deschrijver@gmail.com>
+
+qmlsokoban is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License version 3 or later.
+See the file LICENSE.GPL3 for details.
+
+The images and levels are copied from ksokoban 0.3.0 which is
+Copyright (C) 1998-1999 Anders Widell
+and released under the GNU General Public License version 2 or later.
+
+To play the game you need to have Qt 4.7.0 or higher installed and you
+have to run:
+  qmlviewer qml/main.qml
+
+Alternatively you can install qmlsokoban in your system by running:
+  mkdir build
+  cd build
+  qmake ../qmlsokoban.pro
+  make
+  sudo make install

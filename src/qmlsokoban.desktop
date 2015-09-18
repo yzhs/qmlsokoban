@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=QML Sokoban
+Exec=qmlsokoban
+Icon=
+Terminal=false
+MimeType=text/x-pgf;text/x-tex;
+Categories=Qt;Game;ArcadeGame;
+GenericName=Sokoban Game
+GenericName[fr]=Jeu Sokoban
+Comment=Push the objects to the green spots
+Comment[fr]=Pousser les objets vers les points verts

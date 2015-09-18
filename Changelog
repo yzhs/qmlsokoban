@@ -1,0 +1,38 @@
+version 0.7 (2011-12-16):
+- add panel to select level collections (the list of collections is hardcoded)
+version 0.6 (2011-01-19):
+- fix bug: the floor items could be disconnected during rotation and the
+  objects and man didn't zoom until after the board was rotated
+- make C++ wrapper so that a standalone executable can be produced
+- make all buttons always available by putting them in draggable environments
+- try not to hardcode font sizes
+- the board can now be dragged
+version 0.5 (2010-12-20):
+- add menu with about box
+- add zooming of the game view
+- major rewrite of the code
+- when changing a level, the opacity of the board items is set to 0 before
+  destroying them
+version 0.4.1 (2010-11-24):
+- fix bug: numOfGoals was not increased when during initializing of a level
+  the man is positioned on a goal
+- fix bug: the texts in the game view didn't wrap when they are too large
+- fix bug: clicking the buttons when the message in the game view is displayed
+  didn't work
+- fix bug: the number of blocks on a goal was incorrectly calculated when
+  during undo a block moves to a goal on which the man was previously located
+version 0.4 (2010-11-17):
+- clicking on the intro text or "Level won" text switches to the next level
+- another attempt to make the board resize when the orientation changes
+- add French translation
+version 0.3 (2010-11-16):
+- add support for moving the man by clicking the new place for the man
+  (only horizontal or vertical moves are possible)
+- rescale the board when the orientation changes
+- add undo support (by pressing Ctrl+Z)
+version 0.2 (2010-11-11):
+- rewrite Man and Object moving code
+- add animations
+- show correct level number at any moment during the game (also when the "Level won" message appears)
+- nicer borders (similar but simpler as in ksokoban)
+- center the playing field in the window
