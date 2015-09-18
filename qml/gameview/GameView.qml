@@ -21,7 +21,7 @@
 
 */
 
-import QtQuick 1.0
+import QtQuick 2.0
 import "game.js" as Game
 
 Item {
@@ -34,7 +34,7 @@ Item {
 	property variant levels
 
 	function loadLevelCollection(name) {
-		var levelCollection = Qt.createQmlObject('import QtQuick 1.0; import "../levels/' + name + '.js" as Levels; Item { property variant levels: Levels.levels }', gameView, "LevelCollection");
+		var levelCollection = Qt.createQmlObject('import QtQuick 2.0; import "../levels/' + name + '.js" as Levels; Item { property variant levels: Levels.levels }', gameView, "LevelCollection");
 		levels = levelCollection.levels;
 		levelCollection.destroy();
 	}
