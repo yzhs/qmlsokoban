@@ -169,10 +169,10 @@ Item {
 		height: parent.height
 		focus: false
 
-		Keys.onLeftPressed: Game.moveLeft();
-		Keys.onRightPressed: Game.moveRight();
-		Keys.onDownPressed: Game.moveDown();
-		Keys.onUpPressed: Game.moveUp();
+		Keys.onLeftPressed: Game.modifiedMove(event.modifiers, Game.dirs.LEFT);
+		Keys.onRightPressed: Game.modifiedMove(event.modifiers, Game.dirs.RIGHT);
+		Keys.onDownPressed: Game.modifiedMove(event.modifiers, Game.dirs.DOWN);
+		Keys.onUpPressed: Game.modifiedMove(event.modifiers, Game.dirs.UP);
 		Keys.onCancelPressed: gameView.state = "gameover";
 		Keys.onBackPressed: gameView.state = "gameover";
 		Keys.onEscapePressed: gameView.state = "gameover";

@@ -342,6 +342,7 @@ function changeObjectPosition(which, oldX, oldY, newX, newY) {
 }
 
 function moveMan(dx, dy) {
+	var moved = true;
 	// 0: outside, 1: inside, 2: border, 3: goal, 4: object, 5: man, 6: object on goal, 7: man on goal
 	if (board[itemMan.row+dy][itemMan.column+dx] == 1 || board[itemMan.row+dy][itemMan.column+dx] == 3) {
 		changeManPosition(itemMan.column, itemMan.row, itemMan.column + dx, itemMan.row + dy, dx, dy);
@@ -357,8 +358,38 @@ function moveMan(dx, dy) {
 		addToUndoHistory(dx, dy, 1);
 		itemMan.column += dx;
 		itemMan.row += dy;
+	} else {
+		moved = false;
+	}
 	}
 	testLevelWon();
+	return moved;
+}
+
+var dirs = {
+	UP: 0,
+	DOWN: 1,
+	LEFT: 2,
+	RIGHT: 3
+};
+
+function modifiedMove(mod, dir) {
+	var dx = [0, 0, -1, 1][dir];
+	var dy = [-1, 1, 0, 0][dir];
+	switch (mod) {
+		case Qt.ShiftModifier:
+			// Move as far as possible, pushing gems if necessary
+			while (moveMan(dx, dy));
+			break;
+		case Qt.ControlModifier:
+			// Move as far as possible without pushing any gems
+			while (board[itemMan.row+dy][itemMan.column+dx] == 1
+				|| board[itemMan.row+dy][itemMan.column+dx] == 3) {
+				moveMan(dx, dy);
+			}
+			break;
+		default: moveMan(dx, dy);
+	}
 }
 
 function moveUp() {
