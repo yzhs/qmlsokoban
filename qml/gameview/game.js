@@ -172,8 +172,11 @@ function createBlockObject(item, column, row) {
 }
 
 function createBlock(column, row) {
-	var blockSet = ["ItemFloor.qml", "ItemGoal.qml", "ItemObject.qml", "ItemMan.qml", "ItemBorder0.qml", "ItemBorder1.qml", "ItemBorder2.qml", "ItemBorder3.qml"];
-	var which = board[row][column]; // 0: outside, 1: inside, 2: border, 3: goal, 4: object, 5: man, 6: object on goal, 7: man on goal
+	var blockSet = ["ItemFloor.qml", "ItemGoal.qml", "ItemObject.qml",
+		"ItemMan.qml", "ItemBorder0.qml", "ItemBorder1.qml",
+		"ItemBorder2.qml", "ItemBorder3.qml"];
+	var which = board[row][column]; // 0: outside, 1: inside, 2: border,
+	// 3: goal, 4: object, 5: man, 6: object on goal, 7: man on goal
 	var item;
 
 	if (which <= 0)
@@ -181,14 +184,18 @@ function createBlock(column, row) {
 
 	switch (which) {
 		case 1:
-		case 4: // when the spot has an object on it, put a floor item on this place and separately create the object below
-		case 5: // when the spot has the man on it, put a floor item on this place and separately create the man below
+		case 4: // when the spot has an object on it, put a floor item
+			// on this place and separately create the object below
+		case 5: // when the spot has the man on it, put a floor item on
+			// this place and separately create the man below
 		default:
 			item = blockSet[0];
 			break;
 		case 3:
-		case 6: // when the spot has an object on it, put a goal item on this place and separately create the object below
-		case 7: // when the spot has the man on it, put a goal item on this place and separately create the man below
+		case 6: // when the spot has an object on it, put a goal item
+			// on this place and separately create the object below
+		case 7: // when the spot has the man on it, put a goal item on
+			// this place and separately create the man below
 			item = blockSet[1];
 			break;
 		case 2: // border
@@ -287,7 +294,8 @@ function zoomIn() {
 
 	setZooming(true);
 	gameCanvas.addBlockSize += 5;
-	recenterMan(itemMan.column, itemMan.row, 2, 2); // dx = 2 and dy = 2 in order to force recentering in both directions
+	// dx = 2 and dy = 2 in order to force recentering in both directions
+	recenterMan(itemMan.column, itemMan.row, 2, 2);
 	setZooming(false);
 }
 
@@ -297,7 +305,8 @@ function zoomOut() {
 
 	setZooming(true);
 	gameCanvas.addBlockSize -= 5;
-	recenterMan(itemMan.column, itemMan.row, 2, 2); // dx = 2 and dy = 2 in order to force recentering in both directions
+	// dx = 2 and dy = 2 in order to force recentering in both directions
+	recenterMan(itemMan.column, itemMan.row, 2, 2);
 	setZooming(false);
 }
 
@@ -354,7 +363,10 @@ function moveMan(dx, dy) {
 	    && (board[itemMan.row+2*dy][itemMan.column+2*dx] == 1 || board[itemMan.row+2*dy][itemMan.column+2*dx] == 3)) {
 		var which = findItemObjectNumber(itemMan.column + dx, itemMan.row + dy);
 		changeObjectPosition(which, itemMan.column + dx, itemMan.row + dy, itemMan.column + 2 * dx, itemMan.row + 2 * dy);
-		changeManPosition(itemMan.column, itemMan.row, itemMan.column + dx, itemMan.row + dy, dx, dy); // must do this after changeObjectPosition because if the man goes to the place where the block was, the new type of the place is miscalculated
+		// must do this after changeObjectPosition because if the man
+		// goes to the place where the block was, the new type of the
+		// place is miscalculated
+		changeManPosition(itemMan.column, itemMan.row, itemMan.column + dx, itemMan.row + dy, dx, dy);
 		addToUndoHistory(dx, dy, 1);
 		itemMan.column += dx;
 		itemMan.row += dy;
@@ -466,7 +478,11 @@ function undo() {
 		case 2: case 6: dx = 0; dy = -1; break;
 		case 3: case 7: dx = 0; dy = 1; break;
 	}
-	changeManPosition(itemMan.column, itemMan.row, itemMan.column - dx, itemMan.row - dy, -dx, -dy); // must do this before changeObjectPosition because if the man is on the place where the block returns, the new type of the place is miscalculated
+
+	// must do this before changeObjectPosition because if the man is on
+	// the place where the block returns, the new type of the place is
+	// miscalculated
+	changeManPosition(itemMan.column, itemMan.row, itemMan.column - dx, itemMan.row - dy, -dx, -dy);
 	if (undoHistory[undoHistoryStep] >= 4) { // if an object was moved in this step
 		var which = findItemObjectNumber(itemMan.column + dx, itemMan.row + dy);
 		changeObjectPosition(which, itemMan.column + dx, itemMan.row + dy, itemMan.column, itemMan.row);
