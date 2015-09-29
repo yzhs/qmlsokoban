@@ -98,7 +98,7 @@ Rectangle {
 			rightMargin: 3
 			verticalCenter: parent.verticalCenter
 		}
-		text: qsTr("Level: %1").arg(gameView.currentLevel)
+		text: qsTr("Level: %1").arg(gameView.currentLevel+1)
 		color: "white"
 	}
 

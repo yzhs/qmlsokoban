@@ -229,7 +229,7 @@ Item {
 		State {
 			name: "levelwon"
 			PropertyChanges { target: gameCanvas; opacity: 0.5 }
-			PropertyChanges { target: messageText; text: qsTr("Level %1 won!<br>Press any key or click/touch the screen to continue").arg(gameView.currentLevel) }
+			PropertyChanges { target: messageText; text: qsTr("Level %1 won!<br>Press any key or click/touch the screen to continue").arg(gameView.currentLevel+1) }
 			PropertyChanges { target: messageText; opacity: 1.0 }
 			PropertyChanges { target: levelWonInputHandler; focus: true }
 			PropertyChanges { target: gameCanvasLevelWonMouseArea; enabled: true }
