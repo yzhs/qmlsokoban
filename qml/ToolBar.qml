@@ -98,7 +98,7 @@ Rectangle {
 			rightMargin: 3
 			verticalCenter: parent.verticalCenter
 		}
-		text: qsTr("Level: %1").arg(gameView.currentLevel+1)
+		text: qsTr("Level: %1, Steps: %2, Pushes: %3").arg(gameView.currentLevel+1).arg(gameView.numOfMoves).arg(gameView.numOfPushes)
 		color: "white"
 	}
 

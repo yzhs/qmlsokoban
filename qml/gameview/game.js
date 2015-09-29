@@ -370,9 +370,12 @@ function moveMan(dx, dy) {
 		addToUndoHistory(dx, dy, 1);
 		itemMan.column += dx;
 		itemMan.row += dy;
+		gameView.numOfPushes += 1;
 	} else {
 		moved = false;
 	}
+	if (moved) {
+		gameView.numOfMoves += 1;
 	}
 	testLevelWon();
 	return moved;
@@ -486,9 +489,12 @@ function undo() {
 	if (undoHistory[undoHistoryStep] >= 4) { // if an object was moved in this step
 		var which = findItemObjectNumber(itemMan.column + dx, itemMan.row + dy);
 		changeObjectPosition(which, itemMan.column + dx, itemMan.row + dy, itemMan.column, itemMan.row);
+		gameView.numOfPushes -= 1;
 	}
 	itemMan.column -= dx;
 	itemMan.row -= dy;
+
+	gameView.numOfMoves -= 1;
 }
 
 /*******************************************************************/

@@ -32,6 +32,8 @@ Item {
 	property int currentLevel: -1
 	property alias isAnimated: gameCanvas.isAnimated
 	property variant levels
+	property int numOfMoves: 0
+	property int numOfPushes: 0
 
 	function loadLevelCollection(name) {
 		var levelCollection = Qt.createQmlObject('import QtQuick 2.0; import "../levels/' + name + '.js" as Levels; Item { property variant levels: Levels.levels }', gameView, "LevelCollection");
