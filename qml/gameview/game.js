@@ -70,6 +70,9 @@ function startNewGame() {
 
 	initBoard(); // initialize board
 	gameCanvas.isAnimated = true;
+
+	gameView.numOfMoves = 0;
+	gameView.numOfPushes = 0;
 }
 
 /*******************************************************************/
