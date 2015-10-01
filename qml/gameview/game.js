@@ -397,12 +397,13 @@ function modifiedMove(mod, dir) {
 	switch (mod) {
 		case Qt.ShiftModifier:
 			// Move as far as possible, pushing gems if necessary
-			while (moveMan(dx, dy));
+			while (gameView.state != "levelwon" && gameView.state != "gamewon" && moveMan(dx, dy));
 			break;
 		case Qt.ControlModifier:
 			// Move as far as possible without pushing any gems
-			while (board[itemMan.row+dy][itemMan.column+dx] == 1
-				|| board[itemMan.row+dy][itemMan.column+dx] == 3) {
+			while (gameView.state != "levelwon" && gameView.state != "gamewon" &&
+				(board[itemMan.row+dy][itemMan.column+dx] == 1
+				|| board[itemMan.row+dy][itemMan.column+dx] == 3)) {
 				moveMan(dx, dy);
 			}
 			break;
