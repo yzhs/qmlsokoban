@@ -177,7 +177,7 @@ Item {
 		Keys.onUpPressed: Game.modifiedMove(event.modifiers, Game.dirs.UP);
 		Keys.onCancelPressed: gameView.state = "gameover";
 		Keys.onBackPressed: gameView.state = "gameover";
-		Keys.onEscapePressed: gameView.state = "gameover";
+		Keys.onEscapePressed: gameView.startNewGame();
 		Keys.onHangupPressed: gameView.state = "gameover";
 		Keys.onDeletePressed: gameView.state = "gameover";
 		Keys.onPressed: {
