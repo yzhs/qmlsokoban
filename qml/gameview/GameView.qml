@@ -108,6 +108,7 @@ Item {
 		property real addOffsetY: 0 // idem
 
 		MouseArea {
+			acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
 			id: gameCanvasMouseArea
 
 			property int oldX
@@ -142,7 +143,7 @@ Item {
 			}
 			onReleased: { // click
 				if (!wasDragging)
-					Game.moveManWithMouse(mouse.x, mouse.y);
+					Game.moveManWithMouse(mouse.x, mouse.y, mouse.button);
 				wasDragging = false;
 			}
 		}

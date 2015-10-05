@@ -427,34 +427,132 @@ function moveRight() {
 	moveMan(1, 0);
 }
 
-function moveManWithMouse(x, y) {
+function isEmpty(x, y) {
+	return board[x][y] == 1 || board[x][y] == 3;
+}
+
+function findPath(dx, dy) {
+	var x_old = itemMan.column;
+	var y_old = itemMan.row;
+	var x_new = x_old + dx;
+	var y_new = y_old + dy;
+
+	// TODO Implement A* ?!
+
+	// First idea: Implement breadth first search starting at the target
+	// position (x_new, y_new).
+	var dist = new Array(gameCanvas.numOfRows);
+	for (var row = 0; row < gameCanvas.numOfRows; ++row) {
+		dist[row] = new Array(gameCanvas.numOfColumns);
+		for (var column = 0; column < gameCanvas.numOfColumns; ++column) {
+			// 0: outside, 1: inside, 2: border, 3: goal, 4: object, 5: man, 6: object on goal, 7: man on goal
+			var cell = board[row][column];
+			if (cell == 0 || cell == 2 || cell == 4 || cell == 6) {
+				// Can't go to this cell (at least without moving stuff).
+				dist[row][column] = -10; // Off limits
+			} else {
+				// Can go here, but don't know how far it is.
+				dist[row][column] = maxIndex;
+				// You will never visit a cell twice and some
+				// cellsare walls, so this is strictly greater
+				// than the maximum distance between any two
+				// empty cells.
+			}
+		}
+	}
+
+	// Compute the distance array using breadth-first search
+	dist[x_new*gameCanvas.numOfColumns+y_new] = 0; // Distance from the target to itself
+
+	var xq = []; // Queues for x-
+	var yq = []; // and y-coordinates of cells to check.
+	var dq = []; // Distance from the target of those cells +1
+
+	xq.push(x_new);
+	yq.push(y_new);
+	dq.push(0);
+	var x, y, d;
+	while (xq.length != 0) {
+		x = xq.shift();
+		y = yq.shift();
+		d = dq.shift();
+
+		if (x < 0 || y < 0)
+			continue;
+		if (y >= gameCanvas.numOfRows || x >= dist[y].length)
+			continue;
+		if (dist[y][x] < d)
+			continue;
+
+		dist[y][x] = d;
+		// We can stop the search as soon as we have reach the starting
+		// position, because we are doing a breadth-first search.
+		if (x == x_old && y == y_old)
+			break;
+
+		// Enqueue data for all neighbours.
+		xq.push(x);   xq.push(x);   xq.push(x-1); xq.push(x+1);
+		yq.push(y-1); yq.push(y+1); yq.push(y);   yq.push(y);
+		dq.push(d+1); dq.push(d+1); dq.push(d+1); dq.push(d+1);
+	}
+
+	var dxs = [0, 0, -1, 1];
+	var dys = [-1, 1, 0, 0];
+
+	d = dist[y_old][x_old];
+	if (d != maxIndex) {
+		// Now use dist to find a shortest path from (x_old,y_old) to
+		// (x_new,y_new) if one exists.  All we have to do is follow
+		// the // gradient (ignoring cells with distance set to -1).
+		// Check which neighbor to go to
+		x = itemMan.column;
+		y = itemMan.row;
+		while (dist[y][x] != 0) {
+			for (var i = 0; i < 4; i++) {
+				dx = dxs[i]; dy = dys[i];
+				if (dist[y+dy][x+dx] == dist[y][x] - 1) {
+					moveMan(dx, dy);
+					break;
+				}
+			}
+			x = itemMan.column;
+			y = itemMan.row;
+		}
+	}
+}
+
+function moveManWithMouse(x, y, button) {
 	var dx = Math.floor((x - gameCanvas.offsetX) / gameCanvas.blockSize) - itemMan.column;
 	var dy = Math.floor((y - gameCanvas.offsetY) / gameCanvas.blockSize) - itemMan.row;
 
-	if (dx != 0 && dy != 0) // we allow movement in one direction only
-		return;
-
-	var oldManX = 0;
-	var oldManY = 0;
-	if (dx > 0) {
-		for (var i = 0; i < dx && itemMan.column != oldManX; ++i) {
-			oldManX = itemMan.column;
-			moveRight();
-		}
-	} else if (dx < 0) {
-		for (var i = 0; i > dx && itemMan.column != oldManX; --i) {
-			oldManX = itemMan.column;
-			moveLeft();
-		}
-	} else if (dy > 0) {
-		for (var i = 0; i < dy && itemMan.row != oldManY; ++i) {
-			oldManY = itemMan.row;
-			moveDown();
-		}
-	} else if (dy < 0) {
-		for (var i = 0; i > dy && itemMan.row != oldManY; --i) {
-			oldManY = itemMan.row;
-			moveUp();
+	if (button == Qt.LeftButton) {
+		findPath(dx, dy);
+	} else if (button == Qt.RightButton) {
+		undo();
+	} else if (button == Qt.MiddleButton) {
+		// Move along an axis towards a given cell, pushing crates as necessary
+		var oldManX = 0;
+		var oldManY = 0;
+		if (dx > 0) {
+			for (var i = 0; i < dx && itemMan.column != oldManX; ++i) {
+				oldManX = itemMan.column;
+				moveRight();
+			}
+		} else if (dx < 0) {
+			for (var i = 0; i > dx && itemMan.column != oldManX; --i) {
+				oldManX = itemMan.column;
+				moveLeft();
+			}
+		} else if (dy > 0) {
+			for (var i = 0; i < dy && itemMan.row != oldManY; ++i) {
+				oldManY = itemMan.row;
+				moveDown();
+			}
+		} else if (dy < 0) {
+			for (var i = 0; i > dy && itemMan.row != oldManY; --i) {
+				oldManY = itemMan.row;
+				moveUp();
+			}
 		}
 	}
 }
