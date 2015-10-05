@@ -59,6 +59,8 @@ function startNewGame() {
 	gameCanvas.addBlockSize = 0;
 	gameCanvas.addOffsetX = 0;
 	gameCanvas.addOffsetY = 0;
+	gameView.numOfMoves = 0;
+	gameView.numOfPushes = 0;
 
 	// calculate board size
 	gameCanvas.numOfRows = gameView.levels[gameView.currentLevel].length;
@@ -70,9 +72,6 @@ function startNewGame() {
 
 	initBoard(); // initialize board
 	gameCanvas.isAnimated = true;
-
-	gameView.numOfMoves = 0;
-	gameView.numOfPushes = 0;
 }
 
 /*******************************************************************/
