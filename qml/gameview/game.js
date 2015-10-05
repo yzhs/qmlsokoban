@@ -453,7 +453,7 @@ function findPath(dx, dy) {
 				// Can go here, but don't know how far it is.
 				dist[row][column] = maxIndex;
 				// You will never visit a cell twice and some
-				// cellsare walls, so this is strictly greater
+				// cells are walls, so this is strictly greater
 				// than the maximum distance between any two
 				// empty cells.
 			}
